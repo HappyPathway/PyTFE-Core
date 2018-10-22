@@ -1,0 +1,3 @@
+resource "tfe_team_token" "{{ team_name.split("-")|join("_") }}" {
+  team_id = "${tfe_team.{{ team_name.split("-")|join("_") }}.id}"
+}

@@ -1,0 +1,21 @@
+{
+  "data": {
+    "type":"state-versions",
+    "attributes": {
+      "serial": {{ state.serial }},
+      "md5": "{{ state.md5 }}",
+      "lineage": "{{ state.lineage }}",
+      "state": "{{ state.state }}"
+    }
+    {% if state.run_id %},
+    "relationships": {
+      "run": {
+        "data": {
+          "type": "runs",
+          "id": "{{ state.run_id }}"
+        }
+      }
+    }
+    {% endif %}
+  }
+}

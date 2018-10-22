@@ -1,0 +1,6 @@
+resource "tfe_sentinel_policy" "{{ policy_name.split("-")|join("_") }}" {
+  name = "{{ policy_name }}"
+  organization = "{{ organization.split("-")|join("_") }}"
+  policy = "{{ policy }}"
+  enforce_mode = "{{ enforce_mode }}"
+}

@@ -1,0 +1,54 @@
+import setuptools
+import json
+import glob
+import os
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    name="PyTFE",
+    version="0.0.2",
+    author="HappyPathway",
+    author_email="info@happypathway.com",
+    description="Utilities for working with Terraform Enterprise API",
+    install_requires = [
+        "requests", 
+        "jinja2",
+        "pyhcl",
+        "hvac"
+    ],
+    long_description=long_description,
+    url="https://github.com/HappyPathway/PyTFE",
+    scripts=[
+    ],
+    packages=[
+        "tfe.core"
+    ],
+    py_modules=[
+        "tfe.core.configuration",
+        "tfe.core.exception",
+        "tfe.core.oauth_client",
+        "tfe.core.organization",
+        "tfe.core.run",
+        "tfe.core.sentinel",
+        "tfe.core.session",
+        "tfe.core.state",
+        "tfe.core.team_access",
+        "tfe.core.tfe",
+        "tfe.core.variable",
+        "tfe.core.workspace"
+    ],
+    package_data={
+        "tfe.core": [
+            "templates/hcl/*",
+            "templates/json/*"
+        ]
+    },
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    zip_safe = False
+)

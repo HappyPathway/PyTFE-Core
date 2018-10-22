@@ -1,0 +1,16 @@
+{
+  "data": {
+    "attributes": {
+      "name": "workspace-2",
+      "terraform_version": "0.11.1",
+      "working-directory": "",
+      "vcs-repo": {
+        "identifier": "skierkowski/terraform-test-proj",
+        "branch": "",
+        "ingress-submodules": false,
+        "oauth-token-id": "ot-hmAyP66qk2AMVdbJ"
+      }
+    },
+    "type": "workspaces"
+  }
+}

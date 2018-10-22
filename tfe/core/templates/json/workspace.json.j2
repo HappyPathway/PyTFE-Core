@@ -1,0 +1,23 @@
+{
+  "data": {
+    "attributes": {
+      "name": "{{ workspace.name }}",
+      "terraform_version": "{{ workspace.terraform_version }}"
+      {% if workspace.working_directory %},
+      "working-directory": "{{ workspace.working_directory }}"
+      {% endif %}
+      {% if workspace.vcs_repo %},
+      "vcs-repo": {
+        "identifier": "{{ workspace.vcs_repo.identifier }}",
+        "oauth-token-id": "{{ workspace.vcs_repo.oauth_token_id }}",
+        "branch": "{{ workspace.vcs_repo.branch }}"
+        {% if workspace.vcs_repo.default_branch %}
+        ,
+        "default-branch": {{ workspace.vcs_repo.default_branch }}
+        {% endif %}
+      }
+      {% endif %}
+    }
+  },
+  "type": "workspaces"
+}

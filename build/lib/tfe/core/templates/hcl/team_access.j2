@@ -1,0 +1,5 @@
+resource "tfe_team_access" "{{ workspace }}_{{ team_id.split("-")|join("_")|lower }}" {
+  access = "{{ access }}"
+  team_id = "${tfe_team.{{ team_name.split("-")|join("_") }}.id}"
+  workspace_id = "${tfe_workspace.{{ workspace }}.id}"
+}

@@ -1,0 +1,13 @@
+resource "tfe_organization" "{{ organization.split("-")|join("_") }}" {
+  name = "{{ organization }}"
+  email = "{{ admin_email }}"
+  {% if session_timeout_minutes -%}
+  {{ session_timeout_minutes  }}
+  {%- endif %}
+  {% if session_remember_minutes -%}
+  {{ session_remember_minutes  }}
+  {%- endif %}
+  {% if collaborator_auth_policy -%}
+  {{ collaborator_auth_policy  }}
+  {%- endif %}
+}
