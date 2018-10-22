@@ -1,4 +1,4 @@
-resource "tfe_team_member" "{{ username.split("-")|join("_") }}" {
-  team_id = "${tfe_team.{{ team_name.split("-")|join("_") }}.id}"
-  username = "{{ username }}"
+resource "tfe_team_member" "{{ team_member.username }}" {
+  team_id = "{{ team_member.team_id }}"
+  username = "{{ team_member.username }}"
 }

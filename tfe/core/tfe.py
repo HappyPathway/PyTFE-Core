@@ -13,7 +13,12 @@ import sys
 from tfe.core.session import TFESession
 from tfe.core.exception import TFEValidationError, TFEException, RaisesTFEException, TFESessionException, TFEAttributeError
 
-
+def sanitize_path(path):
+    path = os.path.expanduser(path)
+    path = os.path.expandvars(path)
+    path = os.path.abspath(path)
+    return path
+    
 class Validator(object):
 
     _fields = []
