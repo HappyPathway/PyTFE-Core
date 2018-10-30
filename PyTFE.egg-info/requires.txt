@@ -1,4 +1,0 @@
-requests
-jinja2
-pyhcl
-hvac
