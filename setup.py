@@ -24,8 +24,7 @@ setuptools.setup(
     ],
     packages=[
         "tfe.core",
-        "tfe.organization",
-        "tfe.workspace"
+        "tfe"
     ],
     py_modules=[
         "tfe.core.configuration",
