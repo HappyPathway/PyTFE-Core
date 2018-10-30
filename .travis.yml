@@ -14,6 +14,6 @@ env:
 deploy:
   provider: pypi
   distributions: "sdist bdist_wheel"
-  user: "HappyPathway"
+  user: "happypathway"
   password:
     secure: vnw6U1xPxe0RTEHjdDjIna9o+9nXRefIxjtM23qToNooxSebJncjJkv65mjCfsMqGBdoRrye0oTfuIjf7GzJoJf2/qXQB0X8N+EgI2TXW8LeQa3T66aTZ6+Ep2qrgx/DTMrxOukU6TMS4Zz06B5UReiX8EmSs6cmrV62OQkYQR081nWYUfWSbxnZD9ZmKcJlgwkOEHbzdYdqvXyaas9umCHy5ED5J6Tz8N+wWMCmRMOT+0GmY1kzNHnLySft5jUO52EAbL8S62+MH/hldPiYyH7ExQoqNteLR6IzscwkvRjNyc0DVE7cJmeRmrBi4QAfO8tCzxm1ll1RW9vIJQU6uqYDC/iFCIEXO/LOvL/ziIvdBaa4s97lznJBh2DJfyplLdyQ/Ley68O5m5YlVM7SCzyzOxGdV3XAJc/lQtS0wGev9U3hW8+2/DB/B31+tjdCS9xt/tYdpmQZbByajhpwK676G3V5BaX7wptCprMrHHyzYTxZrMmxSSilA+0TyV2n4tQZxjLYCWDfOsdH+japmgUziORJZPsqEBanLLewZ7JqEKb/0F/N62b6+pPtzqaDqtglzGMGGxTD4MjTjF4l/JJRI2QYwqV1HbuzEyw8NRMA9gDLI8z3kyr8O08fdTNhUwJlCWiGSp3u3V7E8iBzCG6bY/FpoWG1EJ33QCPV56M=
