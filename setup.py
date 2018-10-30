@@ -9,6 +9,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="tfe",
     version="0.0.3",
+    python_requires='>3',
     author="HappyPathway",
     author_email="info@happypathway.com",
     description="Utilities for working with Terraform Enterprise API",
