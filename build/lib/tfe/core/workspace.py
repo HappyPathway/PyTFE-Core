@@ -81,7 +81,12 @@ class Workspace(TFEObject):
 
         self.terraform_version = "0.11.8"
         self.working_directory = None
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+        
         Workspace.logger = logging.getLogger(self.__class__.__name__)
         Workspace.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                     (Validator, ), 

@@ -81,7 +81,12 @@ class Workspace(TFEObject):
 
         self.terraform_version = "0.11.8"
         self.working_directory = None
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+
         Workspace.logger = logging.getLogger(self.__class__.__name__)
         Workspace.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                     (Validator, ), 
@@ -95,7 +100,6 @@ class Workspace(TFEObject):
 
         if self.organization and self.name:
             self.get()
-
 
     @property
     def create_url(self):
@@ -191,3 +195,6 @@ class Workspace(TFEObject):
         resp = self.session.post(self.lock_url)
         resp.raise_for_status()
         return resp.status_code
+
+    def __repr__(self):
+        return self.name

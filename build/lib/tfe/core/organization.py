@@ -12,6 +12,15 @@ from tfe.core.exception import RaisesTFEException, TFESessionException
 from tfe.core.tfe import TFEObject, Validator
 
 
+def log_config():
+    logger = logging.getLogger() # this gets the root logger
+    lhStdout = logger.handlers[0]  # stdout is the only handler initially
+    # ... here I add my own handlers 
+    f = open("/tmp/debug","w")          # example handler
+    lh = logging.StreamHandler(f)
+    logger.addHandler(lh)
+    logger.removeHandler(lhStdout)
+
 class Organization(TFEObject):
     
     _base_dir = os.path.dirname(__file__)
@@ -28,8 +37,14 @@ class Organization(TFEObject):
 
     def __init__(self, organization=None):
         super()
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+        
         Organization.logger = logging.getLogger(self.__class__.__name__)
+
         Organization.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                         (Validator, ), 
                                         dict(_fields=self.__class__.fields))()

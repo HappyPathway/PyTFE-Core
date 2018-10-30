@@ -34,7 +34,12 @@ class Run(TFEObject):
                                         (Validator, ), 
                                         dict(_fields=self.__class__.fields))()
 
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+        
         Run.logger = logging.getLogger(self.__class__.__name__)
         for k, v in kwargs.items():
             setattr(self, k, v)

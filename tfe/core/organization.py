@@ -12,6 +12,8 @@ from tfe.core.exception import RaisesTFEException, TFESessionException
 from tfe.core.tfe import TFEObject, Validator
 
 
+
+
 class Organization(TFEObject):
     
     _base_dir = os.path.dirname(__file__)
@@ -28,8 +30,14 @@ class Organization(TFEObject):
 
     def __init__(self, organization=None):
         super()
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+         
         Organization.logger = logging.getLogger(self.__class__.__name__)
+
         Organization.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                         (Validator, ), 
                                         dict(_fields=self.__class__.fields))()

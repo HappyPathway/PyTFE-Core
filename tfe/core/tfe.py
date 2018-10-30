@@ -18,7 +18,7 @@ def sanitize_path(path):
     path = os.path.expandvars(path)
     path = os.path.abspath(path)
     return path
-    
+
 class Validator(object):
 
     _fields = []
@@ -69,11 +69,20 @@ class TFEObject(TFESession):
     delete_url = None
     validator = None
     logger = None
-        
+    logfile = None 
+
     def __init__(self, _id=None):
         super()
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
-        TFEObject.logger = logging.getLogger(__file__)
+        
+        for field in self.fields:
+            setattr(self, field, None)
+            
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+
+        TFEObject.logger = logging.getLogger(__name__)
         self._id = _id
         if not self.__class__.json_template:
             template_path = "{0}/templates/json/{1}.json.j2".format(
@@ -155,6 +164,7 @@ class TFEObject(TFESession):
                 self.logger.error(str(e))
                 
         setattr(self, "relationships", relationships)
+        return self.raw
 
 
 
@@ -193,9 +203,9 @@ class TFEObject(TFESession):
         for attr in self.fields:
             try:
                 setattr(self.validator, attr, getattr(self, attr))
-                self.logger.debug("{0}: {1}".format(attr, getattr(self, attr)))
+                # self.logger.debug("{0}: {1}".format(attr, getattr(self, attr)))
             except AttributeError as e:
-                self.logger.info(str(e))
+                # self.logger.info(str(e))
                 continue
 
         self.validator.validate()
@@ -297,8 +307,7 @@ class TFEObject(TFESession):
             resp.json().get("data").get("id")
         )
     
-
-    def render(self, **kwargs):
+    def render_hcl(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
             
@@ -314,3 +323,21 @@ class TFEObject(TFESession):
             **args
         )
         return rendered_hcl
+
+
+    def render_json(self, **kwargs):
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+            
+        args = dict()
+        for attr in dir(self):
+            try:
+                setattr(self.__class__.validator, attr, getattr(self, attr))
+            except AttributeError:
+                continue
+
+        args[self.__class__.__name__.lower()] = self.__class__.validator
+        rendered_json = self.json_template.render(
+            **args
+        )
+        return rendered_json

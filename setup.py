@@ -19,7 +19,7 @@ setuptools.setup(
         "hvac"
     ],
     long_description=long_description,
-    url="https://github.com/HappyPathway/PyTFE",
+    url="https://github.com/HappyPathway/PyTFE-Core",
     scripts=[
     ],
     packages=[

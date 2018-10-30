@@ -31,7 +31,12 @@ class Team(TFEObject):
             self.id = team_id
         else:
             self.id = None
-        logging.basicConfig(format='%(asctime)-15s %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+        
         Team.logger = logging.getLogger(self.__class__.__name__)
         Team.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                         (Validator, ), 

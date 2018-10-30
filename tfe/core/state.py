@@ -47,7 +47,12 @@ class State(TFEObject):
         else:
             self.id = None
 
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+        
         State.logger = logging.getLogger(self.__class__.__name__)
         State.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                         (Validator, ), 

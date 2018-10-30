@@ -39,7 +39,12 @@ class Variable(TFEObject):
         else:
             self.id = None
         Variable.validator = type("{0}Validator".format(self.__class__.__name__))
-        logging.basicConfig(format='%(asctime)-15s %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+        
         Variable.logger = logging.getLogger(self.__class__.__name__)
         Variable.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                         (Validator, ), 

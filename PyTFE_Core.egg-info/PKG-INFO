@@ -1,5 +1,5 @@
 Metadata-Version: 1.1
-Name: PyTFE
+Name: PyTFE-Core
 Version: 0.0.2
 Summary: Utilities for working with Terraform Enterprise API
 Home-page: https://github.com/HappyPathway/PyTFE-Core

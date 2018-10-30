@@ -13,7 +13,7 @@ from tfe.core.session import TFESession
 from tfe.core.exception import RaisesTFEException, TFESessionException
 from tfe.core.tfe import TFEObject, Validator
 
-
+class TFESentinelEnforceMode(Exception): pass
 
 class Sentinel(TFEObject):
 
@@ -22,19 +22,33 @@ class Sentinel(TFEObject):
     hcl_template = ""
     fields = [
         "organization",
-        "workspace_id"
+        "policy_name",
+        "enforce_mode",
+        "policy"
     ]
 
     def __init__(self, organization=None, **kwargs):
         super()
         self.organization = organization
+        self.path_name = None
         self.policy_id = None
+        self.policy = None
+        self._enforce_mode = None
+        
+        self.enforcement_modes = [
+            "hard-mandatory", "soft-mandatory", "advisory"
+        ]
 
         Sentinel.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                         (Validator, ), 
                                         dict(_fields=self.__class__.fields))()
 
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+        
         Sentinel.logger = logging.getLogger(self.__class__.__name__)
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -46,6 +60,16 @@ class Sentinel(TFEObject):
             Sentinel.hcl_template = Template(vars_template.read())
 
 
+    @property
+    def enforce_mode(self):
+        return self._enforce_mode
+
+    @enforce_mode.setter
+    def enforce_mode(self, _em):
+        if _em in self.enforcement_modes:
+            self._enforce_mode = _em
+        else:
+            raise TFESentinelEnforceMode("Invalid enformcement mode")
 
     @property
     def create_url(self):
@@ -68,7 +92,7 @@ class Sentinel(TFEObject):
             self.policy_id
         )
 
-    
+
     def upload(self, policy_path):
         _path = sanitize_path(policy_path)
         cur_dir = os.getcwd()

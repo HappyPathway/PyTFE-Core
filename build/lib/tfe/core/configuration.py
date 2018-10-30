@@ -8,22 +8,18 @@ import sys
 import tarfile
 import logging
 
-
+from tfe.core.tfe import sanitize_path
 from tfe.core.session import TFESession
 from tfe.core.exception import RaisesTFEException, TFESessionException
 from tfe.core.tfe import TFEObject, Validator
 
 
-def sanitize_path(path):
-    path = os.path.expanduser(path)
-    path = os.path.expandvars(path)
-    path = os.path.abspath(path)
-    return path
+
 
 
 class Configuration(TFEObject):
     
-    _base_dir = os.path.dirname(__file__)
+    _base_dir = os.path.dirname(__name__)
     json_template = None
     hcl_template = None
 
@@ -45,7 +41,12 @@ class Configuration(TFEObject):
 
         for k, v in kwargs.items():
             setattr(self, k, v)
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+
         Configuration.logger = logging.getLogger(self.__class__.__name__)
         Configuration.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                     (Validator, ), 

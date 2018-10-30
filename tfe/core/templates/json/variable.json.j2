@@ -3,15 +3,19 @@
     "type":"vars",
     "attributes": {
       "key":"{{ variable.key }}",
+      {% if not variable.hcl %}
       "value":"{{ variable.value }}",
+      {% else %}
+      "value": {{ variable.value }},
+      {% endif %}
       "category":"{{ variable.category }}",
-      "hcl":{{ variable.hcl }},
-      "sensitive":{{ variable.sensitive }}
+      "hcl":{{ variable.hcl|lower }},
+      "sensitive":{{ variable.sensitive|lower }}
     },
     "relationships": {
       "workspace": {
         "data": {
-          "id":"{{ variable.workspace.id }}",
+          "id":"{{ variable.workspace_id }}",
           "type":"workspaces"
         }
       }

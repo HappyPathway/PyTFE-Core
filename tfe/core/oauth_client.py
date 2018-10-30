@@ -1,5 +1,6 @@
 import requests
 import os
+
 from jinja2 import Template
 from functools import partial
 import urllib
@@ -54,7 +55,12 @@ class OauthClient(TFEObject):
         else:
             self.id = None
         self.organization = None
-        logging.basicConfig(format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s')
+        
+        logging.basicConfig(
+            filename=self.logfile, 
+            format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
+        )
+        
         OauthClient.logger = logging.getLogger(self.__class__.__name__)
         OauthClient.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                         (Validator, ), 
