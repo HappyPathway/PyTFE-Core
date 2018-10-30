@@ -3,11 +3,9 @@ python:
 - '3.5'
 install:
 - pip install ply==3.10
-- pip install twine
 - pip install -r requirements.txt
 - python setup.py sdist bdist_wheel
-script:
-- twine upload dist/*
+
 env:
   global:
     secure: FJM4sOTiWPGtKxnNvR1iT+S83V0ngrc7D5aqNMIKoAoZgVA8mSecCtlKnLwAsDY/oEIOEm4uC9ykxER6IFUAVTdn0YmPE3BBAU2N6Zz99wqSc2DWfaGNkNut0mUnHyanVY+XXOhOckty9jd2xd7A0wyoAXGWpved9W9mZIm/ylXYg0ftYzNnAwkBvjR2gNt8sWl1vpsAc2q1Lq/XZBppPXLdiosk04D4heClEvqxiSz0hY/y5V6B2YxkDWNQPUsE/tItvDsnG1e9FcxCwZ+zAs99qDeH1Tvjm2P6X0wxrOvOodB134JR5+hKTkQLJg7VQia+Vst8jgmDOesviua6/mGYBv4hyQsIibpCyL810Dx/2bMFoKROTidtm+JEbR2SIkGTP20XATu0cd6gd9UuOlTHBMNwiGcT3tBiRuunCcIC5v4cHMXUEnsJhq8JJyVlRshwuSXWQ6hFTLKF/RQEQYI7V+vbvBK2aHyyO77f3XEWUCzUunboF/FSEXq7YuQjTAnl3kL3YjXZ0ab0/aq5zLpl4P1SVPPp33GIDwVvoWqEGPa+aAeuNu4Swer2FN6Wbh07yv2b92v0UmqXt5UeZbWCCSpGYsM8hD8vxStyuk46QGsoNQbPyB7zZjpyBImhrPfZyfKrr1LagaXSo5kTx4tLyuozReBxGiVBD3eQuVs=
