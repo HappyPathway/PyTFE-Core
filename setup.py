@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="PyTFE",
+    name="tfe",
     version="0.0.3",
     author="HappyPathway",
     author_email="info@happypathway.com",
