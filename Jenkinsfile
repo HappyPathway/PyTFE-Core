@@ -10,7 +10,7 @@ pipeline {
       parallel {
         stage('Publish') {
           steps {
-            archiveArtifacts(artifacts: 'dist/tfe-backup-*.tar.gz', onlyIfSuccessful: true)
+            archiveArtifacts(artifacts: 'dist/*.tar.gz', onlyIfSuccessful: true)
           }
         }
         stage('PyPi Publish') {
