@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tfe",
-    version="0.0.3",
+    version="0.1.0",
     python_requires='>3',
     author="HappyPathway",
     author_email="info@happypathway.com",
