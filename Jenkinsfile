@@ -15,7 +15,7 @@ pipeline {
         }
         stage('PyPi Publish') {
           steps {
-            sh 'twine upload dist/*'
+            sh 'twine upload dist/* || echo'
           }
         }
       }
