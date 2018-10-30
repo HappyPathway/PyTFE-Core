@@ -2,8 +2,17 @@ pipeline {
   agent any
   stages {
     stage('Build') {
-      steps {
-        sh 'python2.7 setup.py sdist bdist_wheel'
+      parallel {
+        stage('Build') {
+          steps {
+            sh 'python2.7 setup.py sdist bdist_wheel'
+          }
+        }
+        stage('CleanUp') {
+          steps {
+            cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true)
+          }
+        }
       }
     }
     stage('Publish') {
