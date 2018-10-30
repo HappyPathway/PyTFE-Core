@@ -5,3 +5,6 @@ python:
 install:
   - pip install ply==3.10
   - pip install -r requirements.txt
+
+script:
+  - uptime
