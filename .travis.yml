@@ -3,4 +3,5 @@ python:
   - "3.5"
 
 install:
+  - pip install ply
   - pip install -r requirements.txt
