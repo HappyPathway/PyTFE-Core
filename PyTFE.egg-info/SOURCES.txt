@@ -30,7 +30,7 @@ tfe/core/templates/hcl/team_access.j2
 tfe/core/templates/hcl/team_member.j2
 tfe/core/templates/hcl/team_token.j2
 tfe/core/templates/hcl/undefined_vars.j2
-tfe/core/templates/hcl/variable.j2
+tfe/core/templates/hcl/variable.hcl.j2
 tfe/core/templates/hcl/workspace.j2
 tfe/core/templates/json/configuration.json.j2
 tfe/core/templates/json/oauth_client.json.j2
@@ -40,5 +40,5 @@ tfe/core/templates/json/sentinel.json.j2
 tfe/core/templates/json/state.json.j2
 tfe/core/templates/json/team.json.j2
 tfe/core/templates/json/teamaccess.json.j2
-tfe/core/templates/json/variables.json.j2
+tfe/core/templates/json/variable.json.j2
 tfe/core/templates/json/workspace.json.j2

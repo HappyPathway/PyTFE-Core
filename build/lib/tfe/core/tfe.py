@@ -74,6 +74,9 @@ class TFEObject(TFESession):
     def __init__(self, _id=None):
         super()
         
+        for field in self.fields:
+            setattr(self, field, None)
+            
         logging.basicConfig(
             filename=self.logfile, 
             format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
@@ -200,9 +203,9 @@ class TFEObject(TFESession):
         for attr in self.fields:
             try:
                 setattr(self.validator, attr, getattr(self, attr))
-                self.logger.debug("{0}: {1}".format(attr, getattr(self, attr)))
+                # self.logger.debug("{0}: {1}".format(attr, getattr(self, attr)))
             except AttributeError as e:
-                self.logger.info(str(e))
+                # self.logger.info(str(e))
                 continue
 
         self.validator.validate()

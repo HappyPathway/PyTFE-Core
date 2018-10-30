@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="PyTFE",
-    version="0.0.2",
+    version="0.0.3",
     author="HappyPathway",
     author_email="info@happypathway.com",
     description="Utilities for working with Terraform Enterprise API",
@@ -23,7 +23,9 @@ setuptools.setup(
     scripts=[
     ],
     packages=[
-        "tfe.core"
+        "tfe.core",
+        "tfe.organization",
+        "tfe.workspace"
     ],
     py_modules=[
         "tfe.core.configuration",
@@ -37,7 +39,9 @@ setuptools.setup(
         "tfe.core.team_access",
         "tfe.core.tfe",
         "tfe.core.variable",
-        "tfe.core.workspace"
+        "tfe.core.workspace",
+        "tfe.workspace",
+        "tfe.organization"
     ],
     package_data={
         "tfe.core": [

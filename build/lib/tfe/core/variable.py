@@ -44,7 +44,7 @@ class Variable(TFEObject):
             filename=self.logfile, 
             format='%(asctime)-15s com.happypathway.tfe.%(name)s: %(message)s'
         )
-        
+
         Variable.logger = logging.getLogger(self.__class__.__name__)
         Variable.validator =  type("{0}Validator".format(self.__class__.__name__), 
                                         (Validator, ), 
@@ -67,9 +67,10 @@ class Variable(TFEObject):
         )
 
     @property
-    def create_url(self):
-        return "{0}/api/v2/vars".format(
-            self.base_url
+    def read_url(self):
+        return "{0}/api/v2/vars/{1}".format(
+            self.base_url,
+            self.id
         )
 
     @property
@@ -78,7 +79,15 @@ class Variable(TFEObject):
             self.base_url,
             self.id
         )
+        
 
+    @property
+    def create_url(self):
+        return "{0}/api/v2/vars".format(
+            self.base_url
+        )
+
+    
     @property
     def delete_url(self):
         return "{0}/api/v2/vars/{1}".format(
@@ -87,3 +96,5 @@ class Variable(TFEObject):
         )
 
     
+    def __repr__(self):
+        return self.key

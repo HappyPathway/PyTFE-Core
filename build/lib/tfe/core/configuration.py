@@ -19,7 +19,7 @@ from tfe.core.tfe import TFEObject, Validator
 
 class Configuration(TFEObject):
     
-    _base_dir = os.path.dirname(__name__)
+    _base_dir = os.path.dirname(__file__)
     json_template = None
     hcl_template = None
 
