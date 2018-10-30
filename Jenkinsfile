@@ -4,7 +4,6 @@ pipeline {
     stage('Build') {
       steps {
         sh 'python2.7 setup.py sdist bdist_wheel'
-        cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true)
       }
     }
     stage('Publish') {
@@ -19,6 +18,11 @@ pipeline {
             sh 'twine upload dist/* || echo'
           }
         }
+      }
+    }
+    stage('CleanUp') {
+      steps {
+        cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true)
       }
     }
   }
