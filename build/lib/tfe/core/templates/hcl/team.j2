@@ -1,4 +1,0 @@
-resource "tfe_team" "{{ team.name.split("-")|join("_") }}" {
-  name = "{{ team.name }}"
-  organization = "${tfe_organization.{{ team.organization }}.id }}"
-}

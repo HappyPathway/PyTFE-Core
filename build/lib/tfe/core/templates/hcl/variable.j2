@@ -1,9 +1,0 @@
-resource "tfe_variable" "{{ variable.workspace.name.split("-")|join("_") }}_{{ variable.key }}" {
-  key = "{{ variable.key }}"
-  value = {% if not variable.hcl %}"{% endif %}{{ variable.value }}{% if not variable.hcl %}"{% endif %}
-  category = "{{ variable.category }}"
-  workspace_id = "${tfe_workspace.{{ variable.workspace.name.split("-")|join("_") }}.id}"
-  hcl = {{ variable.hcl|lower }}
-  sensitive = {{ variable.sensitive|lower }}
-}
-
