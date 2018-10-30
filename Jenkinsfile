@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'python2.7 setup.py sdist bdist_wheel'
+        sh 'python3 setup.py sdist bdist_wheel'
       }
     }
     stage('Publish') {
