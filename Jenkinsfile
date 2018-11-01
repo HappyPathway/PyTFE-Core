@@ -30,5 +30,10 @@ pipeline {
         cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true)
       }
     }
+    stage('test') {
+      steps {
+        sh 'packer build docker.json'
+      }
+    }
   }
 }
