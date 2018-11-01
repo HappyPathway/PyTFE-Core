@@ -8,7 +8,9 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh 'packer build docker.json'
+        sh '''#!/bin/bash
+source ~/vault.sh
+packer build docker.json'''
       }
     }
     stage('Publish') {
