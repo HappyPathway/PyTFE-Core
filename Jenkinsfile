@@ -3,14 +3,14 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''#!/bin/bash
-source ~/vault.sh
-python3 setup.py sdist bdist_wheel'''
+        sh 'python3 setup.py sdist bdist_wheel'
       }
     }
     stage('Test') {
       steps {
-        sh 'packer build docker.json'
+        sh '''#!/bin/bash
+source ~/vault.sh
+packer build docker.json'''
       }
     }
     stage('Publish') {
