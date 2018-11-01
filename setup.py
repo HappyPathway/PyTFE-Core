@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="tfe",
 
-    version="0.4.3",
+    version="0.4.4",
     python_requires='>=3.5.0',
 
     author="HappyPathway",
