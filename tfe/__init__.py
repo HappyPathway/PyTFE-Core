@@ -137,8 +137,8 @@ class Workspace(object):
 
         TFESession(self.api, self.atlas_token)
 
-        org = Organization(self.organization)
-        self.org = org.organization.get()
+        self.org = TFEOrganization(self.organization)
+        self.org.get()
         self.ws = TFEWorkspace()
         self.ws.organization = self.org
         self.ws.name = self.workspace
