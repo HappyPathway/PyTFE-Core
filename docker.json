@@ -1,0 +1,37 @@
+{
+	"variables": {
+		"vault_path": "/secret/atlas",
+		"vault_addr": "{{env `VAULT_ADDR`}}",
+		"vault_token": "{{env `VAULT_TOKEN`}}"
+	},
+	"builders": [
+
+		{
+  			"type": "docker",
+  			"image": "python:3.6",
+			"discard": true
+		}
+	],
+	"provisioners": [
+		{
+			"type": "file",
+			"source": "./",
+			"destination": "/tmp"
+		},
+		{
+			"type": "shell",
+			"inline": [
+				"cd /tmp",
+				"pip install ply 2>/dev/null >&2",
+				"python3 setup.py install 2>/dev/null >&2",
+				"cd /tmp/test",
+				"python3 -m unittest"
+			],
+			"environment_vars": [
+				"PYTFE_CORE_VAULT_BASE_PATH={{user `vault_path`}}",
+				"VAULT_ADDR={{user `vault_addr`}}",
+				"VAULT_TOKEN={{user `vault_token`}}"
+			]
+		}
+	]
+}

@@ -3,12 +3,19 @@ import os
 import unittest
 import hvac
 import requests
-
+import warnings
 from tfe import Organization
 
+def ignore_warnings(test_func):
+    def do_test(self, *args, **kwargs):
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", ResourceWarning)
+            test_func(self, *args, **kwargs)
+    return do_test
 
 class TestOrganization(unittest.TestCase):
 
+    @ignore_warnings
     def setUp(self):
         self.vault_client = hvac.Client(
             os.environ.get("VAULT_ADDR"),
@@ -35,10 +42,13 @@ class TestOrganization(unittest.TestCase):
             email=self.admin_email
         )
 
+    @ignore_warnings
     def test_create(self):
         self.org.create()
         assert(self.org.org_name == self.org_name)
 
+
+    @ignore_warnings
     def test_multi_create(self):
         try:
             self.org.delete()
@@ -48,26 +58,22 @@ class TestOrganization(unittest.TestCase):
         # self.assertRaises(Exception, org.create)
         self.assertRaises(requests.exceptions.HTTPError, self.org.create)
 
+
+    @ignore_warnings
     def test_delete(self):
-        try:
-            self.org.create()
-        except:
-            pass
+        self.org.create()
         self.org.delete()
 
+
+    @ignore_warnings
     def test_multi_delete(self):
-        try:
-            self.org.create()
-        except:
-            pass
+        self.org.create()
         self.org.delete()
         # self.assertRaises(Exception, org.create)
         self.assertRaises(requests.exceptions.HTTPError, self.org.delete)
-    
 
 
-
-
+    @ignore_warnings
     def tearDown(self):
         org = Organization(
             api=self.api,
@@ -75,6 +81,11 @@ class TestOrganization(unittest.TestCase):
             org_name=self.org_name,
             email=self.admin_email
         )
-        org.delete()
+        try:
+            org.delete()
+        except requests.exceptions.HTTPError as Exception:
+            pass
 
         
+if __name__ == '__main__':
+    unittest.main()
