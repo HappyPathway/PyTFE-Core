@@ -6,6 +6,11 @@ pipeline {
         sh 'python3 setup.py sdist bdist_wheel'
       }
     }
+    stage('Test') {
+      steps {
+        sh 'packer build docker.json'
+      }
+    }
     stage('Publish') {
       parallel {
         stage('Publish') {
