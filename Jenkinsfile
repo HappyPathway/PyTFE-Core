@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'python3 setup.py sdist bdist_wheel'
+        sh '''source ~/vault.sh
+python3 setup.py sdist bdist_wheel'''
       }
     }
     stage('Test') {
