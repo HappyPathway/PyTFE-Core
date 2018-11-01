@@ -169,14 +169,11 @@ class TFEObject(TFESession):
                     self.__class__.__name__
                 )
             )
-        try:
-            self.logger.debug(
-                "deleting from {0}".format(self.delete_url)
-            )
-            resp = self.session.delete(self.delete_url)
-            resp.raise_for_status
-        except Exception as e:
-            self.logger.error(str(e))
+        self.logger.debug(
+            "deleting from {0}".format(self.delete_url)
+        )
+        resp = self.session.delete(self.delete_url)
+        resp.raise_for_status()
         return resp.status_code
 
 
