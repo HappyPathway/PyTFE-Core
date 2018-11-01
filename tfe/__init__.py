@@ -3,6 +3,7 @@ import os
 import json
 import string
 import hvac
+import logging
 
 from tfe.core.session import TFESession
 from tfe.core.organization import Organization as TFEOrganization
@@ -19,6 +20,27 @@ from tfe.core.team import Team
 from tfe.core.variable import Variable
 from tfe.core.sentinel import Sentinel
 
+TFE_LOGFILE = "/dev/null"
+
+def log_config(logfile=None):
+    if not logfile:
+        logfile = TFE_LOGFILE
+    found_stdout = False
+    logger = logging.getLogger() # this gets the root logger
+    try:
+        lhStdout = logger.handlers[0]  # stdout is the only handler initially
+        found_stdout = True
+    except:
+        pass
+        
+    f = open(logfile, "a")          # example handler
+    lh = logging.StreamHandler(f)
+    logger.addHandler(lh)
+    if found_stdout:
+        logger.removeHandler(lhStdout)
+
+# setup initial logging
+log_config()
 
 class Organization(object):
     atlas_token = None

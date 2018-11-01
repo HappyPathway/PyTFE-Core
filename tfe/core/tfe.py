@@ -34,13 +34,6 @@ class Validator(object):
     def __setattr__(self, k, v):
         if k in self._fields:
             self.__dict__[k] = v
-        else:
-            raise AttributeError(
-                "{0}: does not have attribute: {1}".format(
-                    self.__class__.__name__,
-                    k
-                )
-            )
 
     def validate(self):
         for field in self._fields:
