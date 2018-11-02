@@ -214,7 +214,7 @@ class Workspace(object):
             var.value = v
             var.hcl = hcl
             var.create()
-            self.variables[k](var)
+            self.variables[k] = var
 
 
     @property
