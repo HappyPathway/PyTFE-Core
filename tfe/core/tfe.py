@@ -101,7 +101,10 @@ class TFEObject(TFESession):
                 self.logger.error(str(e))
                 self.__class__.hcl_template = None
         if self._id:
-            self.get()
+            try:
+                self.get()
+            except TFEAttributeError:
+                pass
 
 
     def list(self):
