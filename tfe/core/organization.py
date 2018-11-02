@@ -8,7 +8,7 @@ import sys
 import logging
 
 from tfe.core.session import TFESession
-from tfe.core.exception import RaisesTFEException, TFESessionException
+from tfe.core.exception import RaisesTFEException, TFESessionException, TFEAttributeError
 from tfe.core.tfe import TFEObject, Validator
 
 
@@ -82,7 +82,18 @@ class Organization(TFEObject):
             self.get()
         except TypeError as te:
             self.logger.info(str(te))
+        except TFEAttributeError as tae:
+            self.logger.info(str(tae))
 
+    @staticmethod
+    def list():
+        orgs = TFESession.session.get(
+            "{0}/api/v2/organizations".format(
+                TFESession.base_url
+            )
+        )
+        for x in orgs.json().get("data"):
+            yield Organization(x.get("id"))
 
     def mktoken(self):
         # POST /organizations/:organization_name/authentication-token 

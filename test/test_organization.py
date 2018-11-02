@@ -5,6 +5,7 @@ import hvac
 import requests
 import warnings
 from tfe import Organization
+from tfe.core.organization import Organization as TFEOrganization
 
 def ignore_warnings(test_func):
     def do_test(self, *args, **kwargs):
@@ -41,6 +42,12 @@ class TestOrganization(unittest.TestCase):
             org_name=self.org_name,
             email=self.admin_email
         )
+
+    @ignore_warnings
+    def test_list(self):
+        org = TFEOrganization()
+        for x in org.list():
+            print(x)
 
     @ignore_warnings
     def test_create(self):
