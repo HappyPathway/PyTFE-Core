@@ -2,7 +2,8 @@
 	"variables": {
 		"vault_path": "/secret/atlas",
 		"vault_addr": "{{env `VAULT_ADDR`}}",
-		"vault_token": "{{env `VAULT_TOKEN`}}"
+		"vault_token": "{{env `VAULT_TOKEN`}}",
+		"test": ""
 	},
 	"builders": [
 
@@ -25,7 +26,7 @@
 				"pip install ply 2>/dev/null >&2",
 				"python3 setup.py install 2>/dev/null >&2",
 				"cd /tmp/test",
-				"python3 -m unittest"
+				"python3 -m unittest {{user `test`}}"
 			],
 			"environment_vars": [
 				"PYTFE_CORE_VAULT_BASE_PATH={{user `vault_path`}}",

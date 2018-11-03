@@ -189,8 +189,16 @@ class Workspace(object):
         self.ws.current_run.force_cancel()
 
 
+    def delete(self):
+        self.ws.delete()
 
+    @property
+    def name(self):
+        return self.ws.name
 
+    def __repr__(self):
+       return self.ws.name 
+       
     def create(self):
         self.ws.create()
         for var in self.variables:

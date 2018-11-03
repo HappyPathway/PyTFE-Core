@@ -8,7 +8,7 @@ import json
 import hcl
 import logging
 import sys
-
+from
 
 from tfe.core.session import TFESession
 from tfe.core.exception import TFEValidationError, TFEException, RaisesTFEException, TFESessionException, TFEAttributeError
@@ -122,8 +122,11 @@ class TFEObject(TFESession):
             resp = TFESession.session.get(self.list_url)
         except Exception as e:
             self.logger.error(str(e))
-        for x in resp.json().get("data"):
-            yield self.__class__(x.get("id"))
+        try:
+            for x in resp.json().get("data"):
+                yield self.__class__(x.get("id"))
+        except TypeError:
+            return []
 
 
     def get(self):
