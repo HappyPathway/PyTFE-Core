@@ -33,4 +33,7 @@ packer build docker.json'''
       }
     }
   }
+  environment {
+    GITHUB_REPO_NAME = 'PyTFE-Code'
+  }
 }
