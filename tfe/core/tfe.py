@@ -8,7 +8,6 @@ import json
 import hcl
 import logging
 import sys
-from
 
 from tfe.core.session import TFESession
 from tfe.core.exception import TFEValidationError, TFEException, RaisesTFEException, TFESessionException, TFEAttributeError
