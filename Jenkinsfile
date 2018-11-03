@@ -28,6 +28,7 @@ packer build docker.json'''
         stage("Publish to Github") {
           steps {
             sh '''
+            #!/bin/bash
             source ~/vault.sh
             github_data=$(python3 scripts/github_token.py)
             GITHUB_TOKEN=$(echo ${github_data | jq .data.personal_access_token})
