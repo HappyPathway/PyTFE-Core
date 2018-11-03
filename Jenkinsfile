@@ -34,7 +34,7 @@ packer build docker.json'''
             GITHUB_USER=$(echo ${github_data | jq .data.username})
             VERSION=$(cat version.txt) 
             ghr -t ${GITHUB_TOKEN} -u ${GITHUB_USER} -r ${GITHUB_REPO_NAME} -c ${GIT_COMMIT} -delete ${VERSION} .
-            ''''
+            '''
           }
         }
       }
@@ -44,10 +44,8 @@ packer build docker.json'''
         cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true, cleanupMatrixParent: true, deleteDirs: true)
       }
     }
-    stage('test') {
-      steps {
-        sh 'packer build docker.json'
-      }
-    }
+  }
+  environment {
+    GITHUB_REPO_NAME = 'PyTFE-Code'
   }
 }
