@@ -1,0 +1,20 @@
+#!/usr/bin/evn python3
+import json
+import hvac
+import os
+
+def main():
+    client = hvac.Client(
+        url=os.environ.get('VAULT_ADDR'), 
+        token=os.environ.get("VAULT_TOKEN")
+    )
+    github_token = client.read("secret/credentials/github").get("data")
+    print(json.dumps(
+            github_token,
+            separators=(',', ':'),
+            indent=4,
+            sort_keys=True
+        )
+    )
+
+main()
