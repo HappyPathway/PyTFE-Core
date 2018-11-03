@@ -29,7 +29,7 @@ class TestOrganization(unittest.TestCase):
             )
         ).get("data")
         self.vault_client.close()
-        
+
         self.org_name = vault_data.get("orgname")
         self.admin_email = vault_data.get("admin_email")
         self.atlas_token = vault_data.get("atlas_token")
@@ -48,7 +48,7 @@ class TestOrganization(unittest.TestCase):
     def test_list(self):
         org = TFEOrganization()
         for x in org.list():
-            print(x)
+            del x
 
     @ignore_warnings
     def test_create(self):
