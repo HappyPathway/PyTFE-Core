@@ -10,7 +10,7 @@ from tfe.core.organization import Organization as TFEOrganization
 def ignore_warnings(test_func):
     def do_test(self, *args, **kwargs):
         with warnings.catch_warnings():
-            warnings.simplefilter("ignore", ResourceWarning)
+            warnings.simplefilter("ignore")
             test_func(self, *args, **kwargs)
     return do_test
 
@@ -29,7 +29,7 @@ class TestOrganization(unittest.TestCase):
             )
         ).get("data")
         self.vault_client.close()
-
+        
         self.org_name = vault_data.get("orgname")
         self.admin_email = vault_data.get("admin_email")
         self.atlas_token = vault_data.get("atlas_token")
@@ -48,7 +48,7 @@ class TestOrganization(unittest.TestCase):
     def test_list(self):
         org = TFEOrganization()
         for x in org.list():
-            del x
+            pass
 
     @ignore_warnings
     def test_create(self):

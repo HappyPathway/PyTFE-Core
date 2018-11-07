@@ -6,10 +6,13 @@ import os
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+with open("version.txt", "r") as version_file:
+    version = version_file.read()
+
 setuptools.setup(
     name="tfe",
 
-    version="0.4.7",
+    version=version,
     python_requires='>=3.5.0',
 
     author="HappyPathway",
