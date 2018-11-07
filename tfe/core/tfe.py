@@ -320,7 +320,7 @@ class TFEObject(TFESession):
         return rendered_hcl
 
 
-    def render_json(self, **kwargs):
+    def render_json(self, template=None, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
             
@@ -332,7 +332,12 @@ class TFEObject(TFESession):
                 continue
 
         args[self.__class__.__name__.lower()] = self.__class__.validator
-        rendered_json = self.json_template.render(
-            **args
-        )
+        if not template:
+            rendered_json = self.json_template.render(
+                **args
+            )
+        else:
+            rendered_json = template.render(
+                **args
+            )
         return rendered_json
