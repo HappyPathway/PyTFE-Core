@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 with open("version.txt", "r") as version_file:
-    version = version_file.read()
+    version = version_file.read().rstrip("-")
 
 setuptools.setup(
     name="tfe",
