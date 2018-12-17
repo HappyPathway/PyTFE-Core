@@ -144,6 +144,7 @@ class TFEObject(TFESession):
             resp.raise_for_status()
         except Exception as e:
             self.logger.error(str(e))
+            raise Exception(str(e))
         try:
             self.raw = resp.json()
             attrs = resp.json().get("data").get("attributes")

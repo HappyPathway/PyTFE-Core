@@ -28,6 +28,7 @@ Vagrant.configure("2") do |config|
       apt-get update
       apt-get install -y python3-pip ipython3 ipython3-notebook
       pip3 install tfe
+      cd /vagrant/notebooks; jupyter notebook --allow-root --ip=0.0.0.0
     SHELL
   end
 end

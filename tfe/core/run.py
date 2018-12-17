@@ -124,3 +124,12 @@ class Run(TFEObject):
             )
         )
         return resp.status_code
+
+    def destroy(self):
+        resp = self.session.post(
+            "{0}/api/v2/runs".format(
+                self.base_url
+            ),
+            data=json.dumps(self.json_template.render(is_destroy=True))
+        )
+        return resp.status_code
