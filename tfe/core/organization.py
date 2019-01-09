@@ -95,6 +95,15 @@ class Organization(TFEObject):
         for x in orgs.json().get("data"):
             yield Organization(x.get("id"))
 
+    def workspaces(self):
+        resp = TFESession.session.get(
+            "{0}/api/v2/organizations/{1}/workspaces".format(
+                self.base_url,
+                self.organization
+            )
+        )
+        return resp.json().get("data")
+
     def mktoken(self):
         # POST /organizations/:organization_name/authentication-token 
         try:
