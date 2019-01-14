@@ -80,6 +80,19 @@ class Run(TFEObject):
         except Exception as e:
             self.logger.error(str(e))
             return None
+
+    @property
+    def details(self):
+        url = "{0}/api/v2/runs/{1}?include=configuration_version.ingress_attributes,created_by".format(
+            self.base_url,
+            self.run_id
+        )
+        try:
+            resp = self.session.get(url)
+            return resp.json()
+        except Exception as e:
+            self.logger.error(str(e))
+            return None
             
     def apply(self):
         # POST /runs/:run_id/actions/apply

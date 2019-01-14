@@ -141,7 +141,7 @@ class Workspace(TFEObject):
 
     @property
     def runs(self):
-        for x in Run.list(self.id):
+        for x in Run(workspace_id=self.id).list():
             yield x
 
     def get(self):
