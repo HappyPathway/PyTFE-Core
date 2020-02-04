@@ -228,21 +228,23 @@ class TFEObject(TFESession):
         if payload_failed:
             raise TFEValidationError("Could not load")
         try:
-            resp = self.session.post(
+            self.resp = self.session.post(
                 self.create_url,
                 data = json.dumps(payload)
             )
-            resp.raise_for_status()
         except Exception as e:
             self.logger.error(rendered_json)
             self.logger.error(str(e))
-            resp.raise_for_status()
+            self.resp.raise_for_status()
 
-        resp.raise_for_status()
-        self.id = resp.json().get("data").get("id")
-        return self.__class__(
-            resp.json().get("data").get("id")
-        )
+        try:
+            self.id = self.resp.json().get("data").get("id")
+            return self.__class__(
+                self.resp.json().get("data").get("id")
+            )
+        except:
+            return self.resp.json()
+
 
 
     def update(self, **kwargs):

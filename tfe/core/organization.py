@@ -10,6 +10,7 @@ import logging
 from tfe.core.session import TFESession
 from tfe.core.exception import RaisesTFEException, TFESessionException, TFEAttributeError
 from tfe.core.tfe import TFEObject, Validator
+from tfe.core.workspace import Workspace
 
 
 
@@ -96,13 +97,29 @@ class Organization(TFEObject):
             yield Organization(x.get("id"))
 
     def workspaces(self):
-        resp = TFESession.session.get(
-            "{0}/api/v2/organizations/{1}/workspaces".format(
+        workspaces = list()
+        initial_url = "{0}/api/v2/organizations/{1}/workspaces".format(
                 self.base_url,
                 self.organization
-            )
         )
-        return resp.json().get("data")
+        
+        def recurse(link, workspaces):
+            resp = TFESession.session.get(
+                link
+            )
+            for ws in resp.json().get("data"):
+                ws = Workspace(
+                    organization=self.organization,
+                    name=ws.get("attributes").get("name")
+                )
+                workspaces.append(ws)
+            _next_ws_link = resp.json().get("links").get("next")
+            if _next_ws_link:
+                return recurse(_next_ws_link, workspaces)
+            else:
+                return workspaces
+        workspaces = recurse(initial_url, workspaces)
+        return workspaces
 
     def mktoken(self):
         # POST /organizations/:organization_name/authentication-token 

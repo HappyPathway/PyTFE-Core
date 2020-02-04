@@ -1,0 +1,4 @@
+#!/Users/darnold/git/PyTFE-Core/testing/bin/python3
+# EASY-INSTALL-SCRIPT: 'pyhcl==0.4.0','hcltool'
+__requires__ = 'pyhcl==0.4.0'
+__import__('pkg_resources').run_script('pyhcl==0.4.0', 'hcltool')

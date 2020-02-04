@@ -126,3 +126,8 @@ dmypy.json
 .vscode
 *.log
 .vagrant
+
+testing
+
+.vscode
+__pycache__

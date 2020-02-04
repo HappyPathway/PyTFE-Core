@@ -9,8 +9,7 @@ import base64
 import logging
 from collections import defaultdict
 import sys
-
-
+from tempfile import NamedTemporaryFile
 
 from tfe.core.session import TFESession
 from tfe.core.exception import RaisesTFEException, TFESessionException
@@ -61,6 +60,23 @@ class State(TFEObject):
         with open("{0}/templates/json/state.json.j2".format(self._base_dir)) as vars_template:
             State.json_template = Template(vars_template.read())
 
+
+    def upload(self, path):
+        with open(path, "r") as state_file:
+            _state_file = json.loads(state_file.read())
+            self.lineage= _state_file.get("lineage")
+            self.serial = _state_file.get("serial")
+
+        with open(path, "rb") as state_file:
+            self.state = base64.b64encode(state_file.read())
+
+        tmp = NamedTemporaryFile(delete=False)
+        tmp.write(self.state)
+        self.md5 = md5(tmp.name)
+        os.unlink(tmp.name)
+        self.create()
+
+
     @property
     def read_url(self):
         return "{0}/api/v2/state-versions/{1}".format(
@@ -78,7 +94,7 @@ class State(TFEObject):
     @property
     def list_url(self):
         query_params = "filter%5Bworkspace%5D%5Bname%5D={0}".format(
-            self.workspace.name
+            self.workspace
         )
         query_params += "&filter%5Borganization%5D%5Bname%5D={0}".format(
             self.organization
@@ -104,14 +120,14 @@ class State(TFEObject):
     def list(self):
         url_params = []
         url_params.append("filter%5Bworkspace%5D%5Bname%5D={0}".format(self.workspace))
-        url_params.append("filter%5Borganization%5D%5Bname%5D={1}".format(self.organization))
+        url_params.append("filter%5Borganization%5D%5Bname%5D={0}".format(self.organization))
         url = "{0}/api/v2/state-versions?{1}".format(
             TFESession.base_url,
             "&".join(url_params)
         )
         resp = self.session.get(url).json()
         for x in resp.get("data"):
-            yield State(x.git("id"))
+            yield State(x.get("id"))
 
     @property
     def current(self):
@@ -121,7 +137,7 @@ class State(TFEObject):
             self.workspace
         )
         resp = self.session.get(url).json()
-        return resp.json().get("data")
+        return resp
 
 
     @property

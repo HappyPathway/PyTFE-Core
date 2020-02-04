@@ -12,9 +12,8 @@ from tfe.core.session import TFESession
 from tfe.core.exception import RaisesTFEException, TFESessionException
 from tfe.core.run import Run
 from tfe.core.state import State
-from tfe.core.organization import Organization
 from tfe.core.tfe import TFEObject, Validator
-
+from tfe.core import organization
 
 class VCSRepo(object):
     _fields = [
@@ -28,14 +27,17 @@ class VCSRepo(object):
     def __init__(self, vcs_repo=None):
         self.ingress_submodules = True
         self.identifier = None
+        self.__dict__["_raw"] = vcs_repo
         if not vcs_repo:
             vcs_repo = dict()
+
         for attr in VCSRepo._fields:
+            attr = "_".join(attr.split("-"))
             setattr(self, attr, None)
 
         for k, v in vcs_repo.items():
             if k in self._fields:
-                setattr(self, k, v)
+                setattr(self, "_".join(k.split("-")), v)
     
     def __setattr__(self, k, v):
         if k in self._fields:
@@ -175,7 +177,7 @@ class Workspace(TFEObject):
         except AttributeError:
             self.current_state = None
 
-        self.organization = Organization(relationships.get("organization").get("data").get("id"))
+        self.organization = organization.Organization(relationships.get("organization").get("data").get("id"))
 
 
     def lock(self):
