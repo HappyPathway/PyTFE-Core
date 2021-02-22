@@ -18,22 +18,10 @@ class TestOrganization(unittest.TestCase):
 
     @ignore_warnings
     def setUp(self):
-        self.vault_client = hvac.Client(
-            os.environ.get("VAULT_ADDR"),
-            os.environ.get("VAULT_TOKEN")
-        )
-
-        vault_data = self.vault_client.read(
-            os.path.join(
-                os.environ.get("PYTFE_CORE_VAULT_BASE_PATH")
-            )
-        ).get("data")
-        self.vault_client.close()
-        
-        self.org_name = vault_data.get("orgname")
-        self.admin_email = vault_data.get("admin_email")
-        self.atlas_token = vault_data.get("atlas_token")
-        self.api = vault_data.get("api")
+        self.org_name = os.environ.get("orgname")
+        self.admin_email = os.environ.get("admin_email")
+        self.atlas_token = os.environ.get("atlas_token")
+        self.api = os.environ.get("api")
 
     @property
     def org(self):

@@ -159,14 +159,12 @@ class Workspace(TFEObject):
         for k, v in attrs.items():
             setattr(self, k, v)
 
-        self.name  = attrs.get("name")
-        self.auto_apply = attrs.get("auto-apply")
-        self.locked = attrs.get("locked")
-        self.working_directory = attrs.get("working-directory")
-        self.terraform_version = attrs.get("terraform-version")
-        self.vcs_repo = VCSRepo(attrs.get("vcs-repo"))
-        self.permissions = attrs.get("permissions")
-        
+        for k, v in attrs.items():
+            if v == True:
+                v = "true"
+            elif v == False:
+                v = "false"
+            setattr(self, "_".join(k.split("-")), v)
         try:
             self.current_run = Run(relationships.get("current-run").get("data").get("id"))
         except AttributeError:
