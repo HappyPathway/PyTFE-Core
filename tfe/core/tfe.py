@@ -106,7 +106,7 @@ class TFEObject(TFESession):
                 pass
 
 
-    def list(self):
+    def list(self, list_url=None):
         if not TFESession.session:
             raise TFESessionException("Session is not iniatialized")
         if not self.list_url:
@@ -114,19 +114,22 @@ class TFEObject(TFESession):
                     self.__class__.__name__
                 )
             )
-        try:
-            self.logger.debug(
-                "listing items from {0}".format(self.list_url)
-            )
+        self.logger.debug(
+            "listing items from {0}".format(self.list_url)
+        )
+        
+        if not list_url:
             resp = TFESession.session.get(self.list_url)
-        except Exception as e:
-            self.logger.error(str(e))
+        else:
+            resp = TFESession.session.get(list_url)
+
+        resp.raise_for_status()
+        print(resp.json())
         try:
             for x in resp.json().get("data"):
                 yield self.__class__(x.get("id"))
         except TypeError:
-            return []
-
+            return resp.json()
 
     def get(self):
         if not TFESession.session:

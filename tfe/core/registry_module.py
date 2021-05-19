@@ -10,10 +10,9 @@ import logging
 
 from tfe.core.tfe import sanitize_path
 from tfe.core.session import TFESession
-from tfe.core.exception import RaisesTFEException, TFESessionException
+from tfe.core.exception import RaisesTFEException, TFESessionException, TFEAttributeError
 from tfe.core.organization import Organization
 from tfe.core.tfe import _Create, TFEObject, Validator
-
 
 class RegistryModule(TFEObject):    
     
@@ -77,7 +76,7 @@ class RegistryModule(TFEObject):
         
         rendered_json = self.render_json(template=template)
         resp = self.session.post(
-            "{0}api/v2/organizations/{1}/registry-modules".format(
+            "{0}/api/v2/organizations/{1}/registry-modules".format(
                 self.base_url,
                 self.organization
             ),
@@ -98,7 +97,7 @@ class RegistryModule(TFEObject):
         
         rendered_json = self.render_json(template=template)
         resp = self.session.post(
-            "{0}api/v2/registry-modules/{1}/registry-modules/{2}/{3}/versions".format(
+            "{0}/api/v1/modules{1}/registry-modules/{2}/{3}/versions".format(
                 self.base_url,
                 self.organization,
                 self.name,
@@ -169,11 +168,28 @@ class RegistryModule(TFEObject):
         return exit_code
 
 
+    def list(self, list_url=None):
+        if not TFESession.session:
+            raise TFESessionException("Session is not iniatialized")
+        if not self.list_url:
+            raise TFEAttributeError("Object: {0} does not have list_url".format(
+                    self.__class__.__name__
+                )
+            )
+        self.logger.debug(
+            "listing items from {0}".format(self.list_url)
+        )
+        if not list_url:
+            resp = TFESession.session.get(self.list_url)
+        else:
+            resp = TFESession.session.get(list_url)
+        resp.raise_for_status()
+        return resp.json()
         
 
     @property
     def list_url(self):
-        return "{0}/api/v2/registry-modules".format(
+        return "{0}/api/registry/v1/modules".format(
             self.base_url,
             self.organization
         )
@@ -187,17 +203,20 @@ class RegistryModule(TFEObject):
 
     @property
     def delete_url(self):
-        # POST /registry-modules/actions/delete/:organization_name/:name/:provider/:version
-        return "{0}/api/v2/organizations/{1}/oauth-clients/{2}".format(
+        return "{0}/api/registry/v1/modules/{1}/{2}/{3}/{4}".format(
             self.base_url,
             self.organization,
-            self.id
+            self.name,
+            self.provider,
+            self.version
         )
 
     @property
     def read_url(self):
-        return "{0}/api/v2/organizations/{1}/oauth-clients/{2}".format(
+        return "{0}/api/registry/v1/modules/{1}/{2}/{3}/{4}".format(
             self.base_url,
             self.organization,
-            self.id
+            self.name,
+            self.provider,
+            self.version
         )
